@@ -3,14 +3,14 @@ import ListItem from '../components/ListItem'
 
 const NotesListPage = () => {
 
-    let [notes, setNotes] = useState([])
+    let [notes, setNotes] = useState([]) 
 
     useEffect(() => {
         getNotes()
     },[])
 
     let getNotes = async () => {
-        let response = await fetch('api/notes')
+        let response = await fetch('api/notes') // "http://127.0.0.1:8000" est ajouter au proxy dans package.json, il faut telecharger npm install react-router-dom pour qu'il fonctionne
         let data = await response.json()
         setNotes(data)
     }
@@ -18,9 +18,10 @@ const NotesListPage = () => {
   return (
     <div>
         <div className="notes-list">
-            {notes.map((note, index) => (
-                <ListItem key={index} note={note} />
-            ))}
+           {notes.map((note, index) => (
+                <ListItem key={index} note={note} /> // {note.body} = maintenant on peut utilisé la paramètre de model en React
+                // key={index} == pk=id
+           ))}
         </div>
     </div>
   )
