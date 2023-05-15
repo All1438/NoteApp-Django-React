@@ -42,7 +42,7 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getNotes(request):
-    notes = Note.objects.all()
+    notes = Note.objects.all().order_by('-updated')
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
 
@@ -50,5 +50,16 @@ def getNotes(request):
 def getNote(request, pk):
     note = Note.objects.get(id=pk)
     serializer = NoteSerializer(note, many=False)
+    return Response(serializer.data)
+
+@api_view(['PUT'])
+def updateNote(request, pk):
+    data = request.data # request.data = il s'agit des données envoyer dans le corps de la requête(JSON ou donné des formulaires), puis le convertit en un objet python utilisable
+    note = Note.objects.get(id=pk)
+    serializer = NoteSerializer(instance=note, data=data) # traité le contenu de data
+    
+    if serializer.is_valid():
+        serializer.save()
+    
     return Response(serializer.data)
     

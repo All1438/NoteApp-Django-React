@@ -10,7 +10,8 @@ const NotesListPage = () => {
     },[])
 
     let getNotes = async () => {
-        let response = await fetch('api/notes') // "http://127.0.0.1:8000" est ajouter au proxy dans package.json, il faut telecharger npm install react-router-dom pour qu'il fonctionne
+        let response = await fetch('api/notes') 
+        // "http://127.0.0.1:8000" est ajouter au proxy dans package.json, il faut telecharger npm install react-router-dom pour qu'il fonctionne
         let data = await response.json()
         setNotes(data)
     }
