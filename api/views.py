@@ -68,4 +68,13 @@ def deleteNote(request, pk):
     note = Note.objects.get(id=pk)
     note.delete()
     return Response('Note was deleted!')
+
+@api_view(['POST'])
+def createNote(request):
+    data = request.data
+    note = Note.objects.create(
+        body=data['body'] # data['body'] = fait réference a une valeur de la clé 'body' d'un dictionnaire 'data', qui est dans React
+    )
+    serializer = NoteSerializer(note, many=False)
+    return Response(serializer.data)
     

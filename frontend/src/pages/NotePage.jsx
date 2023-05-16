@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import {ReactComponent as ArrowLeft} from '../assets/arrow-left.svg' // {ReactComponent as NomBalise}  = permet d'importer seulement les types .svg
+// import {ReactComponent as ArrowLeft} from '../assets/arrow-left.svg' // {ReactComponent as NomBalise}  = permet d'importer seulement les types .svg
+import { BiArrowBack } from 'react-icons/bi'
 
 const NotePage = ()=> {
   const navigate = useNavigate() // useNavigate() = contient des methode permetant de gérer la navigation dans l'application tel que : 'push', 'replace' et 'goBack'
@@ -17,11 +18,22 @@ const NotePage = ()=> {
   // a chaque fois que l'identifiant changent on appel a useEffect()
 
   let getNote = async () => {
+    if (id === 'new') return // return vide = permet d'arrêter la fonction si la condition est vrai
     let response = await fetch(`/api/notes/${id}`) // fetch('le même chemain que dans Django')
     let data = await response.json()
     setNote(data)
   }
 
+  
+  let createNote = async() => {
+    fetch(`/api/notes/create`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(note)
+    })
+  }
 
   let updateNote = async () => {
     fetch(`/api/notes/${id}/update`, {
@@ -44,7 +56,13 @@ const NotePage = ()=> {
   }
 
   let handleSubmit = () => {
-    updateNote()
+    if(id !== 'new' && note.body === ''){
+      deleteNote()
+    } else if(id !== 'new'){
+      updateNote()
+    } else if (id === 'new' && note.body !== null){
+      createNote()
+    }
     navigate('/') // useNavigate('/') = permet de naviguer dans une autre page, fournit par 'react-router-dom'
   }
 
@@ -56,9 +74,14 @@ const NotePage = ()=> {
     <div className='note'>
       <div className="note-header">
         <h3>
-            <ArrowLeft onClick={handleSubmit} />
+            <BiArrowBack onClick={handleSubmit} />
         </h3>
-        <button onClick={deleteNote}>Delete</button>
+        {id !== 'new' ? (
+          <button onClick={deleteNote}>Delete</button>
+          ) : (
+            <button onClick={handleSubmit}>Done</button>
+          )
+        }
       </div>
       <textarea onChange={(e) => {handleChange(e.target.value)}} value={note.body}></textarea> 
       {/* ? = est un moyen d'eviter une erreur de reference nulle, on indique a Js de ne pas essayer d'accéder a la propriété si note est 'null' ou 'undefind' */}
