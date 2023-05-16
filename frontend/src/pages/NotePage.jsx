@@ -22,7 +22,7 @@ const NotePage = ()=> {
     setNote(data)
   }
 
-  
+
   let updateNote = async () => {
     fetch(`/api/notes/${id}/update`, {
       method: "PUT", // method: "POST" = effectue qu'on veut effectuer une operation de mis a jour sur le note
@@ -32,8 +32,17 @@ const NotePage = ()=> {
       body: JSON.stringify(note) // JSON.stringify() = converti un objet JS en une chaîne JSON
     })
   }
-
   
+  let deleteNote = async () => {
+    fetch(`/api/notes/${id}/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": 'application/json'
+      }
+    })
+    navigate('/')
+  }
+
   let handleSubmit = () => {
     updateNote()
     navigate('/') // useNavigate('/') = permet de naviguer dans une autre page, fournit par 'react-router-dom'
@@ -49,6 +58,7 @@ const NotePage = ()=> {
         <h3>
             <ArrowLeft onClick={handleSubmit} />
         </h3>
+        <button onClick={deleteNote}>Delete</button>
       </div>
       <textarea onChange={(e) => {handleChange(e.target.value)}} value={note.body}></textarea> 
       {/* ? = est un moyen d'eviter une erreur de reference nulle, on indique a Js de ne pas essayer d'accéder a la propriété si note est 'null' ou 'undefind' */}
