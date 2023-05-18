@@ -19,14 +19,14 @@ const NotePage = ()=> {
 
   let getNote = async () => {
     if (id === 'new') return // return vide = permet d'arrêter la fonction si la condition est vrai
-    let response = await fetch(`/api/notes/${id}`) // fetch('le même chemain que dans Django')
+    let response = await fetch(`/api/notes/${id}/`) // fetch('le même chemain que dans Django')
     let data = await response.json()
     setNote(data)
   }
 
   
   let createNote = async() => {
-    fetch(`/api/notes/create`, {
+    fetch(`/api/notes/`, {
       method: "POST",
       headers: {
         "Content-type": "application/json"
@@ -36,7 +36,7 @@ const NotePage = ()=> {
   }
 
   let updateNote = async () => {
-    fetch(`/api/notes/${id}/update`, {
+    fetch(`/api/notes/${id}/`, {
       method: "PUT", // method: "POST" = effectue qu'on veut effectuer une operation de mis a jour sur le note
       headers: { // headers = permet de spécialisé les en tête de la requête 
         "Content-type": 'application/json' // indique que le corps de la format de la requête est au format JSON
@@ -46,7 +46,7 @@ const NotePage = ()=> {
   }
   
   let deleteNote = async () => {
-    fetch(`/api/notes/${id}/delete`, {
+    fetch(`/api/notes/${id}/`, {
       method: "DELETE",
       headers: {
         "Content-type": 'application/json'
