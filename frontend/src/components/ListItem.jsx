@@ -1,40 +1,44 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-
+import React from "react";
+import { Link } from "react-router-dom";
 
 let getTitle = (note) => {
-  let title = note.body.split("\n")[0]
-  if(title.length > 45){
-    title = note.slice(0, 45)
+  let title = note.body.split("\n")[0];
+  if (title.length > 45) {
+    title = note.slice(0, 45);
   }
-  return title
-}
+  return title;
+};
 
 let getContent = (note) => {
-  let title = getTitle(note)
-  let content = note.body.replaceAll('\n', ' ')
-  content = content.replaceAll(title, '')
+  let title = getTitle(note);
+  let content = note.body.replaceAll("\n", " ");
+  content = content.replaceAll(title, "");
 
-  if(content.length > 45){
-    return content.slice(0, 45) + "..."
+  if (content.length > 45) {
+    return content.slice(0, 45) + "...";
   } else {
-    return content
+    return content;
   }
-}
+};
 
 let getTime = (note) => {
-  return new Date(note.updated).toLocaleDateString()
-}
+  return new Date(note.updated).toLocaleDateString();
+};
 
-const ListItem = ({note}) => {
+const ListItem = ({ note }) => {
   return (
-    <Link to={`/note/${note.id}`} > {/* si on click sur le contenue de Link, il nous dirigera sur l'url dans to={``} */}
+    <Link to={`/note/${note.id}`}>
+      {" "}
+      {/* si on click sur le contenue de Link, il nous dirigera sur l'url dans to={``} */}
       <div className="notes-list-item">
         <h3>{getTitle(note)}</h3>
-        <p><span>{getTime(note)}</span>{getContent(note)}</p>
+        <p>
+          <span>{getTime(note)}</span>
+          {getContent(note)}
+        </p>
       </div>
     </Link>
-  )
-}
+  );
+};
 
-export default ListItem
+export default ListItem;
