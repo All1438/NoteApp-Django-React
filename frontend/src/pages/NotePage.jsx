@@ -5,7 +5,7 @@ import { BiArrowBack } from 'react-icons/bi'
 
 const NotePage = ()=> {
   const navigate = useNavigate() // useNavigate() = contient des methode permetant de gérer la navigation dans l'application tel que : 'push', 'replace' et 'goBack'
-  const {id} = useParams() // useParams() = permet de d'accéder au paramètre de l'url
+  const {id} = useParams() // useParams() = permet de d'accéder au paramètre de l'url, si l'url actuelle est '/users/123', il return la valeur '123'
   // match.params = est utilisé pour extraire l'identifiant de la note a partir de l'url si(/123), alors il return 123
   // id = correspond a l'Id dans App(url)
   let [note, setNote] = useState("")
@@ -14,17 +14,17 @@ const NotePage = ()=> {
     getNote();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]) 
-  // le second paramètre [] = permet a useEffect se déclanche a chaque fois que la variable noteId change
+  // le second paramètre [] = permet a useEffect se déclanche a chaque fois que la variable noteId change si vide alors ne s'execute qu'une seul fois
   // a chaque fois que l'identifiant changent on appel a useEffect()
 
   let getNote = async () => {
-    if (id === 'new') return // return vide = permet d'arrêter la fonction si la condition est vrai
+    if (id === 'new') return 
+    // return vide = permet d'arrêter la fonction si la condition est vrai
     let response = await fetch(`/api/notes/${id}/`) // fetch('le même chemain que dans Django')
     let data = await response.json()
-    setNote(data)
+    setNote(data) // setNote() = est utilisé pour mettre a jour la valeur de note dans le Hook
   }
 
-  
   let createNote = async() => {
     fetch(`/api/notes/`, {
       method: "POST",

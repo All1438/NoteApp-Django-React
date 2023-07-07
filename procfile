@@ -1,0 +1,1 @@
+web: guvicorn notesappli.wsgi --log-file - 
