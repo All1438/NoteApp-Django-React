@@ -13,8 +13,7 @@ SECRET_KEY = 'django-insecure-zz@0%#ed4h8_sv3jk8uz5pg4y^cc5p4e36g!4^(y&zv7axu!68
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*'] # indique que toutes les adresses IP ou tous les noms d'hote sont autorisés a accéder a l'application
-# ALLOWED_HOSTS = autorise les adresses IP a accéder à votre application
+ALLOWED_HOSTS = ['.vercel.app'] 
 
 
 # Application definition
